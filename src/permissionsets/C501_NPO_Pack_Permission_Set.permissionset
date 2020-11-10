@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permissions for the C501 NPO Pack Managed Package</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Auto_Convert_Lead__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Auto_Convert_Lead__c.Lead__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>C501 NPO Pack Permission Set</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Auto_Convert_Lead__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+</PermissionSet>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <fullName>LeadConvertShowFields</fullName>
+        <description>Fields to show on the Lead Convert Page</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>LeadConvertShowFields</label>
+    </fieldSets>
+</CustomObject>

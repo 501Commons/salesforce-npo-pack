@@ -1,0 +1,27 @@
+minimum_cumulusci_version: '3.22.0'
+project:
+    name: salesforce-npo-pack
+    package:
+        name: salesforce-npo-pack
+        namespace: c501npo
+        api_version: '50.0'
+    dependencies:
+        - github: 'https://github.com/SalesforceFoundation/NPSP'
+    git:
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/salesforce-npo-pack/tests
+            options:
+                outputdir: robot/salesforce-npo-pack/results
+
+    robot_testdoc:
+        options:
+            path: robot/salesforce-npo-pack/tests
+            output: robot/salesforce-npo-pack/doc/salesforce-npo-pack_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
