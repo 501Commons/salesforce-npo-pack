@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Is_Scheduled_for_Import__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is Scheduled for Import means the file is associated to a scheduled import instance (Import_Instance__c)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is Scheduled for Import means the file is associated to a scheduled import instance (Import_Instance__c)</inlineHelpText>
+        <label>Is Scheduled for Import</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

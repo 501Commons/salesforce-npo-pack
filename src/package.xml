@@ -25,25 +25,73 @@
         <name>ApexPage</name>
     </types>
     <types>
+        <members>iphoneuploadicon2</members>
+        <name>ContentAsset</name>
+    </types>
+    <types>
+        <members>Importer</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
         <members>Auto_Convert_Lead__c.Account__c</members>
         <members>Auto_Convert_Lead__c.Lead__c</members>
+        <members>ContentVersion.Is_Scheduled_for_Import__c</members>
+        <members>Import_Definition__c.Frequency__c</members>
+        <members>Import_Definition__c.Require_Import_Files__c</members>
+        <members>Import_Definition__c.Schedule_Time__c</members>
+        <members>Import_Definition__c.Type__c</members>
+        <members>Import_Instance__c.Frequency__c</members>
+        <members>Import_Instance__c.Import_Definition__c</members>
+        <members>Import_Instance__c.Required_Import_Files__c</members>
+        <members>Import_Instance__c.Schedule_Time__c</members>
+        <members>Import_Instance__c.Status__c</members>
+        <members>Import_Instance__c.Type__c</members>
         <name>CustomField</name>
     </types>
     <types>
         <members>Auto_Convert_Lead__c</members>
+        <members>Import_Definition__c</members>
+        <members>Import_Instance__c</members>
         <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Import_Definition__c</members>
+        <members>Import_Instance__c</members>
+        <name>CustomTab</name>
     </types>
     <types>
         <members>Lead.LeadConvertShowFields</members>
         <name>FieldSet</name>
     </types>
     <types>
+        <members>Import_Definition_Record_Page</members>
+        <members>Import_Instance_Record_Page</members>
+        <members>Importer_UtilityBar</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Importer_Import_Instance_OnChange_FLOW</members>
+        <members>Importer_Request_Import_FLOW</members>
+        <name>Flow</name>
+    </types>
+    <types>
         <members>Auto_Convert_Lead__c-Auto Convert Lead Layout</members>
+        <members>Import_Definition__c-Import Definition Layout</members>
+        <members>Import_Instance__c-Import Instance Layout</members>
         <name>Layout</name>
+    </types>
+    <types>
+        <members>Import_Definition__c.All</members>
+        <members>Import_Instance__c.All</members>
+        <name>ListView</name>
     </types>
     <types>
         <members>C501_NPO_Pack_Permission_Set</members>
         <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>Import_Instance__c.Request_Import</members>
+        <name>QuickAction</name>
     </types>
     <version>50.0</version>
 </Package>
