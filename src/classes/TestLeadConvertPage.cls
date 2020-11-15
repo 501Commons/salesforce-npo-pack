@@ -16,7 +16,7 @@ private class TestLeadConvertPage {
         Insert newContact;
 
         Lead newLead = new Lead(
-                        Company = 'Test Account', LastName= 'Test Lead',
+                        Company = 'Test Account', LastName = 'Test Lead',
                         LeadSource = 'Web',  
                         Status = 'Closed - Converted');
         
@@ -45,7 +45,6 @@ private class TestLeadConvertPage {
         compBase.pageControllerReminder = pgBase;
         compBase.pageControllerTask = pgBase;
         
-        
         leadController.setComponentController(new leadConvertCoreComponentController());
         leadController.setDescriptionComponentController(new leadConvertTaskDescComponentController());
         leadController.setTaskComponentController(new leadConvertTaskInfoComponentController() );
@@ -58,7 +57,6 @@ private class TestLeadConvertPage {
         leadController.myComponentController.selectedContact = newContact.Id;
         leadController.myComponentController.leadConvert = newLead;
         
-        
         Contact contactID = leadController.myComponentController.contactID;
         leadController.myComponentController.doNotCreateOppty = true;
         List<SelectOption> leadStatuses = leadController.myComponentController.LeadStatusOption;
@@ -69,7 +67,6 @@ private class TestLeadConvertPage {
         List<SelectOption> timeOptions = leadController.myTaskComponentController.remCon.ReminderTimeOption;
         leadController.myDescriptionComponentController.sendNotificationEmail = true;
         leadController.myComponentController.sendOwnerEmail = true;
-        
         
         List<SelectOption> priorityOptions = leadController.myTaskComponentController.TaskPriorityOption;
         List<SelectOption> statusOptions = leadController.myTaskComponentController.TaskStatusOption;
@@ -129,7 +126,5 @@ private class TestLeadConvertPage {
          
          leadController.myComponentController.accountLookedUp();
          leadController.myTaskComponentController.DueDateChanged();
-         
-        
     } 
 }

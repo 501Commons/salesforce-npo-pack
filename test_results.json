@@ -1,0 +1,14 @@
+[
+    {
+        "Children": null,
+        "ClassName": "TestLeadConvertPage",
+        "Method": "myUnitTest",
+        "Message": null,
+        "Outcome": "Pass",
+        "StackTrace": null,
+        "Stats": {
+            "duration": 8467
+        },
+        "TestTimestamp": "2020-11-10T21:20:22.000+0000"
+    }
+]

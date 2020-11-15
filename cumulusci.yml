@@ -1,14 +1,13 @@
 minimum_cumulusci_version: '3.22.0'
 project:
-    name: salesforce-npo-pack
+    name: NPO Pack
     package:
-        name: salesforce-npo-pack
+        name: NPO Pack
         namespace: c501npo
         api_version: '50.0'
     dependencies:
         - github: 'https://github.com/SalesforceFoundation/NPSP'
     git:
-    source_format: sfdx
 
 tasks:
     robot:

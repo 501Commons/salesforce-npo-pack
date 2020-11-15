@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NPO Pack</fullName>
     <types>
         <members>AutoConvertLeads</members>
         <members>ComponentControllerBase</members>
         <members>DateTimeUtility</members>
         <members>PageControllerBase</members>
+        <members>TestAutoConvertLeads</members>
         <members>TestLeadConvertPage</members>
         <members>leadConvertController</members>
         <members>leadConvertCoreComponentController</members>
@@ -36,10 +38,12 @@
         <members>Auto_Convert_Lead__c.Account__c</members>
         <members>Auto_Convert_Lead__c.Lead__c</members>
         <members>ContentVersion.Is_Scheduled_for_Import__c</members>
+        <members>Import_Definition__c.Email_Attach_Logs__c</members>
         <members>Import_Definition__c.Frequency__c</members>
         <members>Import_Definition__c.Require_Import_Files__c</members>
         <members>Import_Definition__c.Schedule_Time__c</members>
         <members>Import_Definition__c.Type__c</members>
+        <members>Import_Instance__c.Email_Attach_Logs__c</members>
         <members>Import_Instance__c.Frequency__c</members>
         <members>Import_Instance__c.Import_Definition__c</members>
         <members>Import_Instance__c.Required_Import_Files__c</members>

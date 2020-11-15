@@ -155,6 +155,32 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Email_Attach_Logs__c</fullName>
+        <defaultValue>&quot;Error Logs Only&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Email Attach Logs</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Error Logs Only</fullName>
+                    <default>false</default>
+                    <label>Error Logs Only</label>
+                </value>
+                <value>
+                    <fullName>All Logs</fullName>
+                    <default>false</default>
+                    <label>All Logs</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <fields>
         <fullName>Frequency__c</fullName>
         <description>Frequency for automatic scheduling of the import definition.  Automatically creates an Import Instance with status scheduled.</description>
@@ -168,11 +194,6 @@
             <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
-                <value>
-                    <fullName>Daily</fullName>
-                    <default>false</default>
-                    <label>Daily</label>
-                </value>
                 <value>
                     <fullName>Manual</fullName>
                     <default>true</default>
@@ -217,19 +238,9 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>FFN</fullName>
-                    <default>false</default>
-                    <label>FFN</label>
-                </value>
-                <value>
-                    <fullName>SubPool</fullName>
-                    <default>false</default>
-                    <label>SubPool</label>
-                </value>
-                <value>
-                    <fullName>Training</fullName>
-                    <default>false</default>
-                    <label>Training</label>
+                    <fullName>Generic</fullName>
+                    <default>true</default>
+                    <label>Generic</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

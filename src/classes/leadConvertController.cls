@@ -5,7 +5,7 @@
 public with sharing class leadConvertController extends PageControllerBase {
     
     // This is the lead that is to be converted
-    public  Lead leadToConvert {get; set;}
+    public Lead leadToConvert {get; set;}
     
     // Constructor for this controller
     public leadConvertController(ApexPages.StandardController stdController) {
@@ -20,7 +20,7 @@ public with sharing class leadConvertController extends PageControllerBase {
         }
         
         string strSoql = 
-            'select Id, Email, LastName, Status, OwnerId, Name, Company,' + String.join(listStrFields, ',');
+            'select Id, Status, OwnerId, Company,' + String.join(listStrFields, ',');
 
         strSoql += ' from Lead WHERE Id = :leadId';
 
@@ -44,7 +44,6 @@ public with sharing class leadConvertController extends PageControllerBase {
         }
         set;
     }
-
 
   /*
   These are instances of the components' controllers which this class will access.
@@ -217,8 +216,8 @@ public with sharing class leadConvertController extends PageControllerBase {
                 if (taskToCreate.IsReminderSet 
                     && myTaskComponentController.remCon.taskID.ActivityDate != null) {
           
-          //set the reminder time based on the reminder class's ActivityDate
-          //The date and time in the reminder class is converted into a datetime by the convertToDatetime() method
+                    //set the reminder time based on the reminder class's ActivityDate
+                    //The date and time in the reminder class is converted into a datetime by the convertToDatetime() method
                     taskToCreate.ReminderDateTime = 
                         convertToDatetime(
                             myTaskComponentController.remCon.taskID.ActivityDate,
@@ -228,7 +227,7 @@ public with sharing class leadConvertController extends PageControllerBase {
                     
                 }   
         
-        //set the whatId to the Opportunity Id            
+                //set the whatId to the Opportunity Id            
                 taskToCreate.WhatId = leadConvertResult.getOpportunityId();
                 
                 //set the whoId to the contact Id
@@ -252,10 +251,10 @@ public with sharing class leadConvertController extends PageControllerBase {
                 //set the Description field which comes from the leadConvertTaskDescComponent
                 taskToCreate.Description =  myDescriptionComponentController.taskID.Description;
 
-        //if the sendNotificationEmail variable in the leadConvertTaskDescComponent class is set then send an email
+                //if the sendNotificationEmail variable in the leadConvertTaskDescComponent class is set then send an email
                 if (myDescriptionComponentController.sendNotificationEmail)
                 {
-                  //create a new DMLOptions class instance
+                    //create a new DMLOptions class instance
                     Database.DMLOptions dmlo = new Database.DMLOptions();
                     
                     //set the trigger user email flag to true
@@ -266,7 +265,7 @@ public with sharing class leadConvertController extends PageControllerBase {
                 }
                 else
                 {
-                  //if the sendNotificationEmail field was not checked by the user then simply insert the task
+                    //if the sendNotificationEmail field was not checked by the user then simply insert the task
                     insert taskToCreate;
                 }
             }

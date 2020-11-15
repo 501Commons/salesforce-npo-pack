@@ -55,7 +55,22 @@ public with sharing class leadConvertCoreComponentController extends ComponentCo
             }
         }
     }
-    
+
+    public List<Schema.FieldSetMember> getFields() {
+
+        List<Schema.FieldSetMember> fieldSetFields = SObjectType.Lead.FieldSets.LeadConvertShowFields.getFields();
+        for (String fieldSetName :Schema.SObjectType.Lead.fieldSets.getMap().keySet()) {
+
+            // Check for custom fields set
+            if (fieldSetName.containsIgnoreCase('leadconvertshowfields_custom')) {
+                fieldSetFields = Schema.SObjectType.Lead.fieldSets.getMap().get(fieldSetName).getFields();
+                break;
+            }
+        }
+
+        return fieldSetFields;
+    }
+
     // the list of accounts in the select list
     public List<SelectOption> accounts {get; set;}
     
