@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <flowDefinition>c501npo__Importer_Request_Import_FLOW</flowDefinition>
+    <flowDefinition>Importer_Request_Import_FLOW</flowDefinition>
     <label>Request Import</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>

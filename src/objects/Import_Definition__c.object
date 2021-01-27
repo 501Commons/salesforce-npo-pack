@@ -146,6 +146,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -159,6 +160,7 @@
     <fields>
         <fullName>Email_Attach_Logs__c</fullName>
         <defaultValue>&quot;Error Logs Only&quot;</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Email Attach Logs</label>
         <required>false</required>
@@ -183,6 +185,7 @@
     </fields>
     <fields>
         <fullName>Frequency__c</fullName>
+        <deprecated>false</deprecated>
         <description>Frequency for automatic scheduling of the import definition.  Automatically creates an Import Instance with status scheduled.</description>
         <externalId>false</externalId>
         <inlineHelpText>Frequency for automatic scheduling of the import definition.  Automatically creates an Import Instance with status scheduled.</inlineHelpText>
@@ -199,12 +202,19 @@
                     <default>true</default>
                     <label>Manual</label>
                 </value>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Daily</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
     <fields>
         <fullName>Require_Import_Files__c</fullName>
         <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
         <description>Required Import Files is the number of import files required before the import can be scheduled.</description>
         <externalId>false</externalId>
         <inlineHelpText>Required Import Files is the number of import files required before the import can be scheduled.</inlineHelpText>
@@ -218,6 +228,7 @@
     </fields>
     <fields>
         <fullName>Schedule_Time__c</fullName>
+        <deprecated>false</deprecated>
         <description>Scheduled time for automatic scheduling.  Combined with Frequency to automatically create an Import Instance with Status Scheduled.</description>
         <externalId>false</externalId>
         <inlineHelpText>Scheduled time for automatic scheduling.  Combined with Frequency to automatically create an Import Instance with Status Scheduled.</inlineHelpText>
@@ -228,6 +239,7 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Type</label>
         <required>true</required>
@@ -241,6 +253,24 @@
                     <fullName>Generic</fullName>
                     <default>true</default>
                     <label>Generic</label>
+                </value>
+                <value>
+                    <fullName>FFN</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>FFN</label>
+                </value>
+                <value>
+                    <fullName>SubPool</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>SubPool</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Training</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

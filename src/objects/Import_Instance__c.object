@@ -146,6 +146,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -157,7 +158,21 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
+        <fullName>Email_Attach_Logs__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>TEXT(Import_Definition__r.Email_Attach_Logs__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email Attach Logs</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Frequency__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Frequency__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -170,6 +185,7 @@
     </fields>
     <fields>
         <fullName>Import_Definition__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Import Definition</label>
         <referenceTo>Import_Definition__c</referenceTo>
@@ -184,6 +200,7 @@
     </fields>
     <fields>
         <fullName>Required_Import_Files__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Require_Import_Files__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -198,6 +215,7 @@
     </fields>
     <fields>
         <fullName>Schedule_Time__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Schedule_Time__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -210,6 +228,7 @@
     <fields>
         <fullName>Status__c</fullName>
         <defaultValue>&quot;Pending&quot;</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
@@ -244,19 +263,8 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Email_Attach_Logs__c</fullName>
-        <externalId>false</externalId>
-        <formula>TEXT(Import_Definition__r.Email_Attach_Logs__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Email Attach Logs</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Type__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -270,6 +278,7 @@
     <label>Import Instance</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>LAST_UPDATE</columns>
         <columns>NAME</columns>
         <columns>Import_Definition__c</columns>
         <columns>Status__c</columns>

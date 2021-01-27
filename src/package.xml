@@ -50,12 +50,14 @@
         <members>Import_Instance__c.Schedule_Time__c</members>
         <members>Import_Instance__c.Status__c</members>
         <members>Import_Instance__c.Type__c</members>
+        <members>c501_npo_settings__c.Importer_Notification_To_Addresses__c</members>
         <name>CustomField</name>
     </types>
     <types>
         <members>Auto_Convert_Lead__c</members>
         <members>Import_Definition__c</members>
         <members>Import_Instance__c</members>
+        <members>c501_npo_settings__c</members>
         <name>CustomObject</name>
     </types>
     <types>

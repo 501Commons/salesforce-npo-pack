@@ -6,7 +6,17 @@ project:
         namespace: c501npo
         api_version: '50.0'
     dependencies:
-        - github: 'https://github.com/SalesforceFoundation/NPSP'
+        - namespace: npo02
+          version: '3.13'
+          dependencies:
+              - namespace: npe01
+                version: '3.16'
+        - namespace: npe03
+          version: '3.20'
+        - namespace: npe4
+          version: '3.11'
+        - namespace: npe5
+          version: '3.9'   
     git:
 
 tasks:

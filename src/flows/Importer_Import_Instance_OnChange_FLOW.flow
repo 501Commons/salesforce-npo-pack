@@ -26,7 +26,8 @@
             <label>Scheduled</label>
         </rules>
     </decisions>
-    <description>11/14 - Fix to check for required files when scheduling
+    <description>1/26 - Add Namespace
+11/14 - Fix to check for required files when scheduling
 11/11 - Add support for managed package
 
 OnChange property for Import Instance Record - Status not equal Scheduled then clear all associated Files IsScheduledForImport flag</description>
@@ -100,14 +101,14 @@ OnChange property for Import Instance Record - Status not equal Scheduled then c
             </value>
         </filters>
         <filters>
-            <field>c501npo__Is_Scheduled_for_Import__c</field>
+            <field>Is_Scheduled_for_Import__c</field>
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
         <inputAssignments>
-            <field>c501npo__Is_Scheduled_for_Import__c</field>
+            <field>Is_Scheduled_for_Import__c</field>
             <value>
                 <booleanValue>false</booleanValue>
             </value>
@@ -138,7 +139,7 @@ OnChange property for Import Instance Record - Status not equal Scheduled then c
             </value>
         </filters>
         <inputAssignments>
-            <field>c501npo__Is_Scheduled_for_Import__c</field>
+            <field>Is_Scheduled_for_Import__c</field>
             <value>
                 <booleanValue>true</booleanValue>
             </value>

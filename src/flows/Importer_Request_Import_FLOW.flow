@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Email_Notification</name>
+        <label>Email Notification</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>DisplayMessage</targetReference>
+        </connector>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>emailNotificationBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>NPO_Settings.Importer_Notification_To_Addresses__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>emailNotificationSubject</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Get_Count_of_Import_Files</name>
@@ -33,7 +62,7 @@
                 <leftValueReference>countRequiredImportFiles</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Import_Instance.c501npo__Required_Import_Files__c</elementReference>
+                    <elementReference>Get_Import_Instance.Required_Import_Files__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -42,7 +71,8 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>11/14 - Move update files to onchange flow
+    <description>1/20 - Add email notification
+11/14 - Move update files to onchange flow
 11/11 - Add managed package support
 11/8 - check for required files before scheduling
 
@@ -107,7 +137,20 @@ Request Import flow is selected by the User when all the files are uploaded to t
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>c501npo__Import_Instance__c</object>
+        <object>Import_Instance__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>NPO_Settings</name>
+        <label>NPO Settings</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Email_Notification</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>c501_npo_settings__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -116,7 +159,7 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <locationX>50</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>DisplayMessage</targetReference>
+            <targetReference>NPO_Settings</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -127,18 +170,18 @@ Request Import flow is selected by the User when all the files are uploaded to t
             </value>
         </filters>
         <inputAssignments>
-            <field>c501npo__Status__c</field>
+            <field>Status__c</field>
             <value>
                 <stringValue>Scheduled</stringValue>
             </value>
         </inputAssignments>
-        <object>c501npo__Import_Instance__c</object>
+        <object>Import_Instance__c</object>
     </recordUpdates>
     <screens>
         <name>DisplayMessage</name>
         <label>Display Message</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -160,7 +203,7 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <allowPause>true</allowPause>
         <fields>
             <name>ScheduleFailed</name>
-            <fieldText>&lt;p&gt;Unable to Schedule - Number of Files attached ({!countRequiredImportFiles}) to the Import Instance must equal the Required Import Files ({!Get_Import_Instance.c501npo__Required_Import_Files__c}).&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Unable to Schedule - Number of Files attached ({!countRequiredImportFiles}) to the Import Instance must equal the Required Import Files ({!Get_Import_Instance.Required_Import_Files__c}).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -174,6 +217,11 @@ Request Import flow is selected by the User when all the files are uploaded to t
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>emailNotificationBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!Get_Import_Instance.Import_Definition__r.Name} was just scheduled for import automation.</text>
+    </textTemplates>
     <variables>
         <name>countRequiredImportFiles</name>
         <dataType>Number</dataType>
@@ -181,6 +229,23 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+    </variables>
+    <variables>
+        <name>emailNotificationSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>501 Commons NPO Cloud Importer - Import Scheduled</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>emailNotificationToAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recordId</name>
