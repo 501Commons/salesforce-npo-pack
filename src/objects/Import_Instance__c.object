@@ -146,7 +146,6 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -159,7 +158,6 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Email_Attach_Logs__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Email_Attach_Logs__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -172,7 +170,6 @@
     </fields>
     <fields>
         <fullName>Frequency__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Frequency__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -185,7 +182,6 @@
     </fields>
     <fields>
         <fullName>Import_Definition__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Import Definition</label>
         <referenceTo>Import_Definition__c</referenceTo>
@@ -200,7 +196,6 @@
     </fields>
     <fields>
         <fullName>Required_Import_Files__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Require_Import_Files__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -215,7 +210,6 @@
     </fields>
     <fields>
         <fullName>Schedule_Time__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Schedule_Time__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -226,9 +220,19 @@
         <type>Time</type>
     </fields>
     <fields>
+        <fullName>Status_Change_via_Request_Import__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag controller during Request Import to allow a status change monitored by validation rule.  To ensure status change goes through Request Import instead of direct field change.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag controller during Request Import to allow a status change monitored by validation rule.  To ensure status change goes through Request Import instead of direct field change.</inlineHelpText>
+        <label>Status Change via Request Import</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <defaultValue>&quot;Pending&quot;</defaultValue>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
@@ -264,7 +268,6 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Type__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -294,5 +297,12 @@
     <pluralLabel>Import Instances</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Status_Change_via_Request_Import_Only</fullName>
+        <active>true</active>
+        <description>Validate status change to scheduled via request import only</description>
+        <errorConditionFormula>AND( TEXT(Status__c) = &quot;Scheduled&quot;,  NOT(Status_Change_via_Request_Import__c) )</errorConditionFormula>
+        <errorMessage>Status change to Scheduled is only allowed thru the Request Import action.  Select the Request Import button to schedule the import automation.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

@@ -71,7 +71,8 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>1/20 - Add email notification
+    <description>2/1 - Add flag to allow status change
+1/20 - Add email notification
 11/14 - Move update files to onchange flow
 11/11 - Add managed package support
 11/8 - check for required files before scheduling
@@ -169,6 +170,12 @@ Request Import flow is selected by the User when all the files are uploaded to t
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Status_Change_via_Request_Import__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Status__c</field>
             <value>

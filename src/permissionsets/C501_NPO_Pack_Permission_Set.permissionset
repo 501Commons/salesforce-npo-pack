@@ -96,6 +96,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Import_Instance__c.Status_Change_via_Request_Import__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Import_Instance__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>

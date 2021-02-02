@@ -48,6 +48,7 @@
         <members>Import_Instance__c.Import_Definition__c</members>
         <members>Import_Instance__c.Required_Import_Files__c</members>
         <members>Import_Instance__c.Schedule_Time__c</members>
+        <members>Import_Instance__c.Status_Change_via_Request_Import__c</members>
         <members>Import_Instance__c.Status__c</members>
         <members>Import_Instance__c.Type__c</members>
         <members>c501_npo_settings__c.Importer_Notification_To_Addresses__c</members>
@@ -98,6 +99,10 @@
     <types>
         <members>Import_Instance__c.Request_Import</members>
         <name>QuickAction</name>
+    </types>
+    <types>
+        <members>Import_Instance__c.Status_Change_via_Request_Import_Only</members>
+        <name>ValidationRule</name>
     </types>
     <version>50.0</version>
 </Package>
