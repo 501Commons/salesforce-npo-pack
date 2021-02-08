@@ -127,19 +127,20 @@ public with sharing class leadConvertController extends PageControllerBase {
         //set lead ID
         leadConvert.setLeadId(leadToConvert.Id);    
         
-        system.debug('***** leadConvertController::convertLead - selectedAccount: ' + myComponentController.selectedAccount + ' AccountId: ' + myComponentController.contactId.AccountId);
+        system.debug('***** leadConvertController::convertLead - myComponentController.contactId.AccountId: ' + myComponentController.contactId.AccountId + ' selectedAccount: ' + myComponentController.selectedAccount + ' AccountId: ' + myComponentController.contactId.AccountId);
 
         //if the main lead convert component is not set then return
         if (myComponentController == NULL) return null;
 
-        if (myComponentController != NULL && !String.isBlank(myComponentController.selectedAccount) &&
+        if (!String.isBlank(myComponentController.contactId.AccountId)) {
+
+            // Default to the Contact Account
+            leadConvert.setAccountId(myComponentController.contactId.AccountId);
+        }
+        else if (myComponentController != NULL && !String.isBlank(myComponentController.selectedAccount) &&
             myComponentController.selectedAccount != 'NONE' && myComponentController.selectedAccount != 'NEW') {
 
             leadConvert.setAccountId(myComponentController.selectedAccount);
-        }
-        else {
-            // Default to the Contact Account
-            leadConvert.setAccountId(myComponentController.contactId.AccountId);
         }
         
         //if the Account is not set, then show an error

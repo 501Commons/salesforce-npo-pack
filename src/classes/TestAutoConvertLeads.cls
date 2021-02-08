@@ -13,12 +13,18 @@ private class TestAutoConvertLeads {
           Email = 'email@domain.com',
           AccountId = newAccount.Id
         );
+        
         Insert newContact;
 
         Lead newLead = new Lead(
-                        Company = 'Test Account', LastName = 'Test Lead',
+                        Company = 'Test Account', 
+                        LastName = 'Test Lead',
                         LeadSource = 'Web',  
-                        Status = 'Closed - Converted');
+                        Status = 'Closed - Converted'
+
+                        // Required Class Management - Managed Package Field.  How to deal with required fields?
+//                        ,c501_cm__Training_Status__c = 'Pending'
+                        );
         
         Insert newLead;
 

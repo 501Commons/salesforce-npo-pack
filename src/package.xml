@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NPO Pack</fullName>
     <types>
         <members>AutoConvertLeads</members>
         <members>ComponentControllerBase</members>
@@ -71,8 +70,6 @@
         <name>FieldSet</name>
     </types>
     <types>
-        <members>Import_Definition_Record_Page</members>
-        <members>Import_Instance_Record_Page</members>
         <members>Importer_UtilityBar</members>
         <name>FlexiPage</name>
     </types>
