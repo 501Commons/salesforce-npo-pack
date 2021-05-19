@@ -312,8 +312,36 @@ public with sharing class leadConvertCoreComponentController extends ComponentCo
                 
                 // for each contact found, add an option to attach to the existing contact
                 for (Contact a : contactsFound) {
-                    
-                    contacts.add(new SelectOption(a.Id, EXISTING + a.Name));// + ' (' + a.RecordType.DeveloperName + ')'));
+
+                    String textLabel = EXISTING + a.Name + ' (';
+
+                    if (a.get('RecordTypeId') <> null) {
+                        RecordType recordType = Database.query('SELECT DeveloperName FROM RecordType WHERE Id = \'' + a.get('RecordTypeId').toString() + '\' LIMIT 1');
+                        String recordTypeName = recordType.get('DeveloperName').toString();
+                        textLabel += recordTypeName;
+                    }
+
+                    // Add Program Management - Engagements
+                    pmdm__ProgramEngagement__c [] pmmEngagements = [
+                        SELECT
+                            pmdm__Program__r.Name 
+                        FROM pmdm__ProgramEngagement__c
+                        WHERE pmdm__Contact__c = :a.Id];
+        
+                    List<String> engagements = new List<String>();
+                    if (pmmEngagements.size() > 0) {
+                        for (pmdm__ProgramEngagement__c pmmEngagement :pmmEngagements) {
+                            engagements.add(pmmEngagement.pmdm__Program__r.Name);
+                        }
+                    }
+        
+                    if (engagements.size() > 0) {
+                        textLabel += ' - ' + engagements.toString();
+                    }
+
+                    textLabel +=  + ')';
+        
+                    contacts.add(new SelectOption(a.Id, textLabel));
                 }
                 
             }
@@ -338,19 +366,39 @@ public with sharing class leadConvertCoreComponentController extends ComponentCo
     public PageReference contactLookedUp() {
         system.debug('!!! Contact looked up --> ' + memberId.ContactId );
         
-        Contact [] a = [
-            SELECT
-                Id, 
-                Name, 
-                //RecordType.DeveloperName, 
-                AccountId 
-            FROM Contact WHERE Id = :memberId.ContactId];
+        List<Contact> a = Database.query('SELECT Id, Name, RecordTypeId, RecordType.DeveloperName, AccountId FROM Contact WHERE Id = \'' + memberId.ContactId + '\'');
         
         if (a.size() > 0) {
             
-            // add the locked up contact to the slect list
-            contacts.add(new SelectOption(a[0].Id, EXISTING + a[0].Name));// + ' (' + a[0].RecordType.DeveloperName + ')'));
+            String textLabel = EXISTING + a[0].Name + ' (';
+            
+            if (a[0].get('RecordTypeId') <> null) {
+                String recordTypeName = a[0].get('RecordType.DeveloperName').toString();
+                textLabel += recordTypeName;
+            }
 
+            // Add Program Management - Engagements
+            pmdm__ProgramEngagement__c [] pmmEngagements = [
+                SELECT
+                    pmdm__Program__r.Name 
+                FROM pmdm__ProgramEngagement__c
+                WHERE pmdm__Contact__c = :memberId.ContactId];
+
+            List<String> engagements = new List<String>();
+            if (pmmEngagements.size() > 0) {
+                for (pmdm__ProgramEngagement__c pmmEngagement :pmmEngagements) {
+                    engagements.add(pmmEngagement.pmdm__Program__r.Name);
+                }
+            }
+
+            if (engagements.size() > 0) {
+                textLabel += ' - ' + engagements.toString();
+            }
+            textLabel +=  + ')';
+
+            // add the locked up contact to the slect list
+            contacts.add(new SelectOption(a[0].Id, textLabel));
+            
             contactID.AccountId = a[0].AccountId;
             selectedContact = a[0].Id;
             
@@ -371,7 +419,7 @@ public with sharing class leadConvertCoreComponentController extends ComponentCo
                 LeadStatusOption = new List<SelectOption>();
                 
                 //get the lead statuses
-                LeadStatus [] ls = [select MasterLabel from LeadStatus where IsConverted=true order by SortOrder];
+                LeadStatus [] ls = [SELECT MasterLabel FROM LeadStatus WHERE IsConverted = true ORDER BY SortOrder];
                 
                 // if there is more than 1 lead status option, add a NONE option  
                 if (ls.size() > 1) {
@@ -387,6 +435,7 @@ public with sharing class leadConvertCoreComponentController extends ComponentCo
             
             return LeadStatusOption;
         }
+        
         set;
     }
     

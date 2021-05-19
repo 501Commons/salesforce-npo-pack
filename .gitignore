@@ -3,6 +3,7 @@
 .sfdx
 /src.orig
 /temp
+test_results.*
 
 # Python
 *.pyc

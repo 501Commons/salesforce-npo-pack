@@ -12,6 +12,7 @@ private class TestAutoConvertLeads {
           FirstName = 'First',
           Email = 'email@domain.com',
           AccountId = newAccount.Id
+//          ,Imported_From__c = 'Imagine'
         );
         
         Insert newContact;
@@ -21,10 +22,8 @@ private class TestAutoConvertLeads {
                         LastName = 'Test Lead',
                         LeadSource = 'Web',  
                         Status = 'Closed - Converted'
-
-                        // Required Class Management - Managed Package Field.  How to deal with required fields?
 //                        ,c501_cm__Training_Status__c = 'Pending'
-                        );
+        );
         
         Insert newLead;
 

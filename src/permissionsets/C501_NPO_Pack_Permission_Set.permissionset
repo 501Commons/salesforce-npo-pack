@@ -44,10 +44,6 @@
         <apexClass>leadConvertTaskRemindComponentController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>c501_npo_settings__c</name>
-    </customSettingAccesses>
     <description>Permissions for the C501 NPO Pack Managed Package</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -57,6 +53,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Auto_Convert_Lead__c.Lead__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Import_Definition__c.Check_Column_Names__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -72,6 +73,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Import_Definition__c.Schedule_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Import_Instance__c.Check_Column_Names_Fx__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Import_Instance__c.Check_Column_Names__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Import_Instance__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

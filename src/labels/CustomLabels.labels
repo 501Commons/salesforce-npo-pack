@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>labelCampaignHistoryViewHelp</fullName>
+        <categories>CampaignHistoryView</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Help text for the Campaign History View page</shortDescription>
+        <value>Campaign History View for the current contact.  Update the filters to change the history that is showing.</value>
+    </labels>
+    <labels>
+        <fullName>labelCampaignHistoryViewTitle</fullName>
+        <categories>CampaignHistoryView</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title for the Campaign History View page</shortDescription>
+        <value>Campaign History</value>
+    </labels>
+</CustomLabels>

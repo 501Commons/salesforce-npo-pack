@@ -1,49 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
-    <decisions>
-        <name>Check_Status</name>
-        <label>Check Status</label>
-        <locationX>396</locationX>
-        <locationY>613</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Content_Documents</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Scheduled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.c501npo__Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Scheduled</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Is_Scheduled_for_Import</targetReference>
-            </connector>
-            <label>Scheduled</label>
-        </rules>
-    </decisions>
-    <description>1/26 - Add Namespace
-11/14 - Fix to check for required files when scheduling
-11/11 - Add support for managed package
-
-OnChange property for Import Instance Record - Status not equal Scheduled then clear all associated Files IsScheduledForImport flag</description>
+    <description>5/19 - Remove Elements for NoOp</description>
     <interviewLabel>Importer - Import Instance OnChange {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Importer - Import Instance OnChange FLOW</label>
-    <loops>
-        <name>Loop_Content_Documents</name>
-        <label>Loop Content Documents</label>
-        <locationX>176</locationX>
-        <locationY>373</locationY>
-        <collectionReference>Get_Content_Document</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Clear_Is_Scheduled_for_Import_0</targetReference>
-        </nextValueConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -67,11 +27,8 @@ OnChange property for Import Instance Record - Status not equal Scheduled then c
         <name>Get_Content_Document</name>
         <label>Get Content Document</label>
         <locationX>176</locationX>
-        <locationY>253</locationY>
+        <locationY>311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Content_Documents</targetReference>
-        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>LinkedEntityId</field>
@@ -84,68 +41,6 @@ OnChange property for Import Instance Record - Status not equal Scheduled then c
         <object>ContentDocumentLink</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Clear_Is_Scheduled_for_Import_0</name>
-        <label>Clear Is Scheduled for Import</label>
-        <locationX>396</locationX>
-        <locationY>493</locationY>
-        <connector>
-            <targetReference>Check_Status</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ContentDocumentId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_Content_Documents.ContentDocumentId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Is_Scheduled_for_Import__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Is_Scheduled_for_Import__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <object>ContentVersion</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Set_Is_Scheduled_for_Import</name>
-        <label>Set Is Scheduled for Import</label>
-        <locationX>264</locationX>
-        <locationY>733</locationY>
-        <connector>
-            <targetReference>Loop_Content_Documents</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ContentDocumentId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_Content_Documents.ContentDocumentId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsLatest</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Is_Scheduled_for_Import__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <object>ContentVersion</object>
-    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>

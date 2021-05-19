@@ -6,17 +6,16 @@ project:
         namespace: c501npo
         api_version: '50.0'
     dependencies:
-        - namespace: npo02
-          version: '3.13'
-          dependencies:
-              - namespace: npe01
-                version: '3.16'
-        - namespace: npe03
-          version: '3.20'
-        - namespace: npe4
-          version: '3.11'
-        - namespace: npe5
-          version: '3.9'   
+        # npo02 (includes npe01)
+        - github: https://github.com/SalesforceFoundation/Households
+        # npe03
+        - github: https://github.com/SalesforceFoundation/Recurring_Donations
+        # npe4
+        - github: https://github.com/SalesforceFoundation/Relationships
+        # npe5
+        - github: https://github.com/SalesforceFoundation/Affiliations
+        # pmm
+        - github: https://github.com/SalesforceFoundation/PMM
     git:
 
 tasks:

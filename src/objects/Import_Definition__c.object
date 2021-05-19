@@ -132,6 +132,11 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
@@ -149,6 +154,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Check_Column_Names__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Check that all the column names are the same between the file template in the Import Definition and the file in the Import Instance.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check that all the column names are the same between the file template in the Import Definition and the file in the Import Instance.</inlineHelpText>
+        <label>Check Column Names</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Email_Attach_Logs__c</fullName>
         <defaultValue>&quot;Error Logs Only&quot;</defaultValue>

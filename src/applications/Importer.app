@@ -10,7 +10,7 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>Importer</label>
+    <label>Cloud Importer</label>
     <navType>Standard</navType>
     <tabs>Import_Definition__c</tabs>
     <tabs>Import_Instance__c</tabs>

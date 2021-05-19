@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Check_File_Headers</name>
+        <label>Check File Headers</label>
+        <locationX>1772</locationX>
+        <locationY>911</locationY>
+        <actionName>Importer_Compare_File_Headers</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>File_Headers_Equal</targetReference>
+        </connector>
+        <inputParameters>
+            <name>importerInstances</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Email_Notification</name>
         <label>Email Notification</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>2372</locationX>
+        <locationY>893</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -31,10 +49,42 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>Collect_Template_Files</name>
+        <label>Collect Template Files</label>
+        <locationX>571</locationX>
+        <locationY>740</locationY>
+        <assignmentItems>
+            <assignToReference>templateFilenames</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>getLoopTemplateFilename</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Templates</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Found_Match</name>
+        <label>Found Match</label>
+        <locationX>1291</locationX>
+        <locationY>1502</locationY>
+        <assignmentItems>
+            <assignToReference>countFileMatchesFound</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Files</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Get_Count_of_Import_Files</name>
         <label>Get Count of Import Files</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationX>1100</locationX>
+        <locationY>596</locationY>
         <assignmentItems>
             <assignToReference>countRequiredImportFiles</assignToReference>
             <operator>AssignCount</operator>
@@ -42,15 +92,97 @@
                 <elementReference>Get_Content_Document</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>countTemplateFiles</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>Get_Content_Document_Definition</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Required_Import_Files</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Column_Names</name>
+        <label>Check Column Names</label>
+        <locationX>1716</locationX>
+        <locationY>1184</locationY>
+        <defaultConnector>
+            <targetReference>Update_Importer_Instance</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_CheckColumnNames</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Import_Instance.Check_Column_Names_Fx__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_File_Headers</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_File_Name</name>
+        <label>Check File Name</label>
+        <locationX>1440</locationX>
+        <locationY>1228</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Files</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Match</defaultConnectorLabel>
+        <rules>
+            <name>Match</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>templateFilenames</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>getLoopInstanceFilename</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Found_Match</targetReference>
+            </connector>
+            <label>Match</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>File_Headers_Equal</name>
+        <label>File Headers Equal</label>
+        <locationX>1889</locationX>
+        <locationY>910</locationY>
+        <defaultConnector>
+            <targetReference>File_Headers_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_File_Headers_Equal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_File_Headers</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Importer_Instance</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Required_Import_Files</name>
         <label>Required Import Files</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationX>1096</locationX>
+        <locationY>747</locationY>
         <defaultConnector>
             <targetReference>Missing_Files</targetReference>
         </defaultConnector>
@@ -65,21 +197,94 @@
                     <elementReference>Get_Import_Instance.Required_Import_Files__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>countTemplateFiles</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>countRequiredImportFiles</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Update_Importer_Instance</targetReference>
+                <targetReference>Loop_Templates</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>2/1 - Add flag to allow status change
+    <decisions>
+        <name>Template_Files_Matching</name>
+        <label>Template Files Matching</label>
+        <locationX>1600</locationX>
+        <locationY>918</locationY>
+        <defaultConnector>
+            <targetReference>File_Types_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_MatchingTemplates</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>countFileMatchesFound</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>countTemplateFiles</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Column_Names</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>5/19 - Check to see if Check_Column_Names__c is enabled
+5/18 - added header check
+5/3/21 - Added support to verify file names from the templates in Definition to files uploaded in Instance
+2/1 - Add flag to allow status change
 1/20 - Add email notification
 11/14 - Move update files to onchange flow
 11/11 - Add managed package support
 11/8 - check for required files before scheduling
 
 Request Import flow is selected by the User when all the files are uploaded to the Import Instance.  This flow then goes and set the Is Scheduled For Import flag on all related files with the latest version to true.</description>
+    <formulas>
+        <name>getLoopInstanceFilename</name>
+        <dataType>String</dataType>
+        <expression>{!Instance_Content_Doc.Title} + &quot;.&quot; + {!Instance_Content_Doc.FileExtension}</expression>
+    </formulas>
+    <formulas>
+        <name>getLoopTemplateFilename</name>
+        <dataType>String</dataType>
+        <expression>{!Template_Content_Doc.Title} + &quot;.&quot; + {!Template_Content_Doc.FileExtension}</expression>
+    </formulas>
     <interviewLabel>Importer - Request Import FLOW {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Importer - Request Import FLOW</label>
+    <loops>
+        <name>Loop_Files</name>
+        <label>Loop Files</label>
+        <locationX>798</locationX>
+        <locationY>948</locationY>
+        <collectionReference>Get_Content_Document</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Instance_Content_Doc</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Template_Files_Matching</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_Templates</name>
+        <label>Loop Templates</label>
+        <locationX>800</locationX>
+        <locationY>742</locationY>
+        <collectionReference>Get_Content_Document_Definition</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Template_Content_Doc</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Loop_Files</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -89,7 +294,7 @@ Request Import flow is selected by the User when all the files are uploaded to t
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -102,8 +307,8 @@ Request Import flow is selected by the User when all the files are uploaded to t
     <recordLookups>
         <name>Get_Content_Document</name>
         <label>Get Content Document</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>1096</locationX>
+        <locationY>445</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Count_of_Import_Files</targetReference>
@@ -121,13 +326,34 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Import_Instance</name>
-        <label>Get Import Instance</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <name>Get_Content_Document_Definition</name>
+        <label>Get Content Doc Definition</label>
+        <locationX>1097</locationX>
+        <locationY>308</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Content_Document</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LinkedEntityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Import_Instance.Import_Definition__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ContentDocumentLink</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Import_Instance</name>
+        <label>Get Import Instance</label>
+        <locationX>1096</locationX>
+        <locationY>175</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Content_Document_Definition</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -142,10 +368,31 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Instance_Content_Doc</name>
+        <label>Instance Content Doc</label>
+        <locationX>1441</locationX>
+        <locationY>955</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_File_Name</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Loop_Files.ContentDocumentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ContentDocument</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>NPO_Settings</name>
         <label>NPO Settings</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>2212</locationX>
+        <locationY>893</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Email_Notification</targetReference>
@@ -154,11 +401,32 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <object>c501_npo_settings__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Template_Content_Doc</name>
+        <label>Template Content Doc</label>
+        <locationX>797</locationX>
+        <locationY>517</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Collect_Template_Files</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Loop_Templates.ContentDocumentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ContentDocument</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Importer_Instance</name>
         <label>Update Importer Instance</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>2033</locationX>
+        <locationY>895</locationY>
         <connector>
             <targetReference>NPO_Settings</targetReference>
         </connector>
@@ -187,8 +455,8 @@ Request Import flow is selected by the User when all the files are uploaded to t
     <screens>
         <name>DisplayMessage</name>
         <label>Display Message</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationX>2528</locationX>
+        <locationY>899</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -201,24 +469,56 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>File_Headers_Check</name>
+        <label>File Headers Check</label>
+        <locationX>1891</locationX>
+        <locationY>733</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ScheduleFailed_0_0</name>
+            <fieldText>&lt;p&gt;Unable to Schedule because the file column names in the Import Definition files do not match the file column names in the Import Instance files.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>File_Types_Check</name>
+        <label>File Types Check</label>
+        <locationX>1599</locationX>
+        <locationY>742</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ScheduleFailed_0</name>
+            <fieldText>&lt;p&gt;Unable to Schedule because the filenames (including file type) in the Import Instance do not match the filenames (including file type) in the Import Definition.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Missing_Files</name>
         <label>Missing Files</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>1414</locationX>
+        <locationY>738</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>ScheduleFailed</name>
-            <fieldText>&lt;p&gt;Unable to Schedule - Number of Files attached ({!countRequiredImportFiles}) to the Import Instance must equal the Required Import Files ({!Get_Import_Instance.Required_Import_Files__c}).&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Unable to Schedule do to 1 or more of the following issues&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Number of Files attached ({!countRequiredImportFiles}) to the Import Instance must equal the Required Import Files ({!Get_Import_Instance.Required_Import_Files__c})&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Number of Files (Templates) attached ({!countTemplateFiles}) to the Import Definition must equal the Required Import Files ({!Get_Import_Instance.Required_Import_Files__c})&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
-        <locationY>0</locationY>
+        <locationX>971</locationX>
+        <locationY>50</locationY>
         <connector>
             <targetReference>Get_Import_Instance</targetReference>
         </connector>
@@ -230,7 +530,26 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <text>{!Get_Import_Instance.Import_Definition__r.Name} was just scheduled for import automation.</text>
     </textTemplates>
     <variables>
+        <name>countFileMatchesFound</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>countRequiredImportFiles</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>countTemplateFiles</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -259,6 +578,13 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>templateFilenames</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

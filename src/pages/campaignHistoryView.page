@@ -1,0 +1,142 @@
+<!-- 
+    Copyright (c) 2016, Salesforce.org
+    All rights reserved.
+    
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+    
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of Salesforce.org nor the names of
+      its contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+ 
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+    FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+    COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    POSSIBILITY OF SUCH DAMAGE.
+-->  
+ 
+<apex:page controller="CTRL_CampaignHistoryView" title="{!$Label.c501npo__labelcampaignhistoryviewtitle}" action="{!OnPageLoad}" showHeader="false" tabStyle="Contact" standardStylesheets="true" sidebar="false">
+
+    <!-- resource generated from https://tools.lightningdesignsystem.com/css-customizer 
+    SLDS Info from https://www.lightningdesignsystem.com/ -->
+    <apex:includeLightning />
+    <apex:stylesheet value="{!URLFOR($Resource.c501sldswinter20, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
+
+    <style>
+        .myTD span.dateFormat {
+            display: none !important;
+        }
+        .myTD.datetime,
+        .myTD.textarea {
+            min-width: 200px;
+        }
+        .myTD.picklist,
+        .myTD.multipicklist,
+        .myTD.reference,
+        .myTD.date {
+            min-width: 170px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        // hack that prevents Salesforce from always putting focus
+        // on the first date field, which pops up the ugly calendar control!
+        window.onload = function() {}
+    </script>
+
+    <apex:form id="vfform">
+        <div class="c501sldswinter20">
+            <!-- PAGE SPINNER -->
+            <apex:actionStatus id="retrieveStatus" 
+                onstart="document.getElementById('divLoading').style.display='block';"
+                onstop="document.getElementById('divLoading').style.display='none';"/>
+            <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
+                <div class="slds-spinner_brand slds-spinner slds-spinner_medium" style="position:fixed;top:30%;" aria-hidden="false" role="alert">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            <!-- PAGE HEADER -->
+            <!-- /PAGE HEADER -->
+            <fieldset class="slds-form">
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-form-element slds-size--1-of-3">
+                        <apex:selectList id="ddlRelativeDates" value="{!FilterRelativeDateName}" required="false" size="1" styleClass="slds-select">
+                            <apex:actionSupport immediate="false" event="onchange" rerender="tblCampaignHistory" status="retrieveStatus" action="{!ChangeListView}" />
+                            <apex:selectOptions value="{!listSORelativeDates}" /> 
+                        </apex:selectList>
+                    </div>
+                    <div class="slds-col--padded slds-form-element slds-size--1-of-3">
+                        <apex:selectList id="ddlCustomFilters" value="{!FilterCustomSearch}" required="false" size="1" styleClass="slds-select">
+                            <apex:actionSupport immediate="false" event="onchange" rerender="tblCampaignHistory" status="retrieveStatus" action="{!ChangeListView}" />
+                            <apex:selectOptions value="{!listSOCustomSearchFilters}" /> 
+                        </apex:selectList>
+                    </div>
+                    <div class="slds-col--padded slds-size--1-of-3"/>
+                </div>
+            </fieldset>
+            
+            <apex:dataTable value="{!listCampaignHistory}" var="campaignMember" id="tblCampaignHistory" 
+                styleClass="slds-table slds-table_bordered slds-table_striped slds-table_fixed-layout"
+                columnClasses="slds-truncate"
+                headerClass="slds-text-heading--label slds-theme--shade" style="width:100%" >                 
+
+            <!--
+                <apex:column styleClass="myTD reference" >
+                    <apex:facet name="header">Member</apex:facet>
+                    <apex:outputLink value="/{!campaignMember.Id}">Go To Campaign</apex:outputLink>
+                </apex:column> 
+            -->
+                <!-- Add FieldSet Fields -->
+                <apex:repeat value="{!fields}" var="f">
+                    <apex:column style="width:50px" styleClass="myTD {!f.Type} {!IF($ObjectType['CampaignMember'].fields[f].dependentPicklist,
+                                                IF(f.Type == 'picklist', 'dependentPicklistFixup', 'dependentMultiPicklistFixup'),'')}" >
+                        <apex:facet name="header">{!f.Label}</apex:facet>
+                        <apex:outputField value="{!campaignMember[f]}" 
+                                    styleClass="{!CASE(f.Type, 
+                                                    'reference', 'lookupOutput', 
+                                                    'picklist', 'slds-select',
+                                                    'multipicklist', 'slds-select multipicklistSLDSFixup',
+                                                    'boolean', 'slds-checkbox',
+                                                    'textarea', 'slds-textarea',
+                                                    'slds-input')}"
+                                    id="inputX"/>
+                    </apex:column>
+                </apex:repeat>
+            </apex:dataTable>
+
+            <script type="text/javascript">
+                function fixSearchIMG() {
+                    var input = document.getElementsByClassName("lookupInput");
+                    var inputLen = input.length;
+                    for (i = 0; i < inputLen; i++) {
+                        if (typeof(input[i]) !== 'undefined' && input[i].tagName === "INPUT") {
+                            input[i].style.visibility = "";
+                            var lkSpan = input[i].parentElement;
+                            var lkLink = lkSpan.querySelector("a");
+                            lkLink.style.visibility = "";
+                            lkLink.className = "";
+                            lkLink.innerHTML = "<svg aria-hidden=\"true\" class=\"slds-icon slds-input__icon slds-icon--x-small slds-icon-text-default\" viewBox=\"0 0 24 24\"><path  d=\"M22.9 20.9l-6.2-6.1c1.3-1.8 1.9-4 1.6-6.4-.6-3.9-3.8-7.1-7.8-7.4C5 .4.4 5 1 10.5c.3 4 3.5 7.3 7.4 7.8 2.4.3 4.6-.3 6.4-1.5l6.1 6.1c.3.3.7.3 1 0l.9-1c.3-.3.3-.7.1-1zM3.7 9.6c0-3.2 2.7-5.9 5.9-5.9s6 2.7 6 5.9-2.7 6-6 6-5.9-2.6-5.9-6z\"></path></svg>";
+                        }
+                    }
+                }
+                fixSearchIMG();
+            </script>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+        </div> <!-- slds -->    
+    </apex:form>
+</apex:page>
