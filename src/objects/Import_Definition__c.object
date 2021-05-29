@@ -143,7 +143,6 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -157,7 +156,6 @@
     <fields>
         <fullName>Check_Column_Names__c</fullName>
         <defaultValue>true</defaultValue>
-        <deprecated>false</deprecated>
         <description>Check that all the column names are the same between the file template in the Import Definition and the file in the Import Instance.</description>
         <externalId>false</externalId>
         <inlineHelpText>Check that all the column names are the same between the file template in the Import Definition and the file in the Import Instance.</inlineHelpText>
@@ -168,7 +166,6 @@
     <fields>
         <fullName>Email_Attach_Logs__c</fullName>
         <defaultValue>&quot;Error Logs Only&quot;</defaultValue>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Email Attach Logs</label>
         <required>false</required>
@@ -193,7 +190,6 @@
     </fields>
     <fields>
         <fullName>Frequency__c</fullName>
-        <deprecated>false</deprecated>
         <description>Frequency for automatic scheduling of the import definition.  Automatically creates an Import Instance with status scheduled.</description>
         <externalId>false</externalId>
         <inlineHelpText>Frequency for automatic scheduling of the import definition.  Automatically creates an Import Instance with status scheduled.</inlineHelpText>
@@ -222,7 +218,6 @@
     <fields>
         <fullName>Require_Import_Files__c</fullName>
         <defaultValue>1</defaultValue>
-        <deprecated>false</deprecated>
         <description>Required Import Files is the number of import files required before the import can be scheduled.</description>
         <externalId>false</externalId>
         <inlineHelpText>Required Import Files is the number of import files required before the import can be scheduled.</inlineHelpText>
@@ -236,7 +231,6 @@
     </fields>
     <fields>
         <fullName>Schedule_Time__c</fullName>
-        <deprecated>false</deprecated>
         <description>Scheduled time for automatic scheduling.  Combined with Frequency to automatically create an Import Instance with Status Scheduled.</description>
         <externalId>false</externalId>
         <inlineHelpText>Scheduled time for automatic scheduling.  Combined with Frequency to automatically create an Import Instance with Status Scheduled.</inlineHelpText>
@@ -247,7 +241,6 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Type</label>
         <required>true</required>

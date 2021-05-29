@@ -55,6 +55,7 @@
         <members>Import_Instance__c.Email_Attach_Logs__c</members>
         <members>Import_Instance__c.Frequency__c</members>
         <members>Import_Instance__c.Import_Definition__c</members>
+        <members>Import_Instance__c.Last_Error_Message__c</members>
         <members>Import_Instance__c.Required_Import_Files__c</members>
         <members>Import_Instance__c.Schedule_Time__c</members>
         <members>Import_Instance__c.Status_Change_via_Request_Import__c</members>

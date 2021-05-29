@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Check_File_Headers</name>
         <label>Check File Headers</label>
-        <locationX>1772</locationX>
-        <locationY>911</locationY>
+        <locationX>1740</locationX>
+        <locationY>904</locationY>
         <actionName>Importer_Compare_File_Headers</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>File_Headers_Equal</targetReference>
+            <targetReference>Get_Instance_Error</targetReference>
         </connector>
         <inputParameters>
             <name>importerInstances</name>
@@ -21,8 +21,8 @@
     <actionCalls>
         <name>Email_Notification</name>
         <label>Email Notification</label>
-        <locationX>2372</locationX>
-        <locationY>893</locationY>
+        <locationX>2794</locationX>
+        <locationY>932</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
@@ -156,8 +156,8 @@
     <decisions>
         <name>File_Headers_Equal</name>
         <label>File Headers Equal</label>
-        <locationX>1889</locationX>
-        <locationY>910</locationY>
+        <locationX>2049</locationX>
+        <locationY>901</locationY>
         <defaultConnector>
             <targetReference>File_Headers_Check</targetReference>
         </defaultConnector>
@@ -235,7 +235,33 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>5/19 - Check to see if Check_Column_Names__c is enabled
+    <decisions>
+        <name>Valid_Email</name>
+        <label>Valid Email</label>
+        <locationX>2520</locationX>
+        <locationY>1061</locationY>
+        <defaultConnector>
+            <targetReference>DisplayMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_ValidEmail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NPO_Settings.Importer_Notification_To_Addresses__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Notification</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>5/28 - check email and look for error message
+5/19 - Check to see if Check_Column_Names__c is enabled
 5/18 - added header check
 5/3/21 - Added support to verify file names from the templates in Definition to files uploaded in Instance
 2/1 - Add flag to allow status change
@@ -368,6 +394,27 @@ Request Import flow is selected by the User when all the files are uploaded to t
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Instance_Error</name>
+        <label>Get Instance Error</label>
+        <locationX>1904</locationX>
+        <locationY>902</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>File_Headers_Equal</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Import_Instance__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Instance_Content_Doc</name>
         <label>Instance Content Doc</label>
         <locationX>1441</locationX>
@@ -391,11 +438,11 @@ Request Import flow is selected by the User when all the files are uploaded to t
     <recordLookups>
         <name>NPO_Settings</name>
         <label>NPO Settings</label>
-        <locationX>2212</locationX>
-        <locationY>893</locationY>
+        <locationX>2339</locationX>
+        <locationY>1063</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Email_Notification</targetReference>
+            <targetReference>Valid_Email</targetReference>
         </connector>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>c501_npo_settings__c</object>
@@ -425,8 +472,8 @@ Request Import flow is selected by the User when all the files are uploaded to t
     <recordUpdates>
         <name>Update_Importer_Instance</name>
         <label>Update Importer Instance</label>
-        <locationX>2033</locationX>
-        <locationY>895</locationY>
+        <locationX>2152</locationX>
+        <locationY>1064</locationY>
         <connector>
             <targetReference>NPO_Settings</targetReference>
         </connector>
@@ -455,8 +502,8 @@ Request Import flow is selected by the User when all the files are uploaded to t
     <screens>
         <name>DisplayMessage</name>
         <label>Display Message</label>
-        <locationX>2528</locationX>
-        <locationY>899</locationY>
+        <locationX>2791</locationX>
+        <locationY>1182</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -465,20 +512,30 @@ Request Import flow is selected by the User when all the files are uploaded to t
             <fieldText>&lt;p&gt;Scheduled for Import&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <fields>
+            <name>Instance_Message</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!Get_Instance_Error.Last_Error_Message__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>File_Headers_Check</name>
         <label>File Headers Check</label>
-        <locationX>1891</locationX>
-        <locationY>733</locationY>
+        <locationX>2063</locationX>
+        <locationY>717</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>ScheduleFailed_0_0</name>
             <fieldText>&lt;p&gt;Unable to Schedule because the file column names in the Import Definition files do not match the file column names in the Import Instance files.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Instance_Error</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!Get_Instance_Error.Last_Error_Message__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

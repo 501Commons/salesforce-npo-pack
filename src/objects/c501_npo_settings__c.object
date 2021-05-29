@@ -4,7 +4,6 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Campaign_History_Custom_Filter__c</fullName>
-        <deprecated>false</deprecated>
         <description>Custom filter and values to show on the Campaign History View page. 
 Format is CustomFieldName,CustomFieldAPIName:Picklist values separated with comma.
 Example Class Type,Class_Type__c:Remote,Classroom</description>
@@ -21,7 +20,6 @@ Example Class Type,Class_Type__c:Remote,Classroom</inlineHelpText>
     </fields>
     <fields>
         <fullName>Importer_Notification_To_Addresses__c</fullName>
-        <deprecated>false</deprecated>
         <description>List of email addresses to send importer notifications (comma separated)</description>
         <externalId>false</externalId>
         <inlineHelpText>List of email addresses to send importer notifications (comma separated)</inlineHelpText>

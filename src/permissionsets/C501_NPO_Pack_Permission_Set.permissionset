@@ -102,6 +102,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Import_Instance__c.Last_Error_Message__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Import_Instance__c.Required_Import_Files__c</field>
         <readable>true</readable>
     </fieldPermissions>

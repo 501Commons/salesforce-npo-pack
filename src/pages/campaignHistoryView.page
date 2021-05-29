@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 -->  
  
-<apex:page controller="CTRL_CampaignHistoryView" title="{!$Label.c501npo__labelcampaignhistoryviewtitle}" action="{!OnPageLoad}" showHeader="false" tabStyle="Contact" standardStylesheets="true" sidebar="false">
+<apex:page controller="CTRL_CampaignHistoryView" title="{!$Label.labelCampaignHistoryViewTitle}" action="{!OnPageLoad}" showHeader="false" tabStyle="Contact" standardStylesheets="true" sidebar="false">
 
     <!-- resource generated from https://tools.lightningdesignsystem.com/css-customizer 
     SLDS Info from https://www.lightningdesignsystem.com/ -->

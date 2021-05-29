@@ -3,7 +3,6 @@
     <fields>
         <fullName>Is_Scheduled_for_Import__c</fullName>
         <defaultValue>false</defaultValue>
-        <deprecated>false</deprecated>
         <description>Is Scheduled for Import means the file is associated to a scheduled import instance (Import_Instance__c)</description>
         <externalId>false</externalId>
         <inlineHelpText>Is Scheduled for Import means the file is associated to a scheduled import instance (Import_Instance__c)</inlineHelpText>

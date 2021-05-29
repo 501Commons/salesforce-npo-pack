@@ -143,7 +143,6 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -156,7 +155,6 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Check_Column_Names_Fx__c</fullName>
-        <deprecated>false</deprecated>
         <description>Check that all the column names are the same between the file template in the Import Definition and the file in the Import Instance.</description>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Check_Column_Names__c</formula>
@@ -170,7 +168,6 @@
     <fields>
         <fullName>Check_Column_Names__c</fullName>
         <defaultValue>true</defaultValue>
-        <deprecated>false</deprecated>
         <description>Deprecated</description>
         <externalId>false</externalId>
         <inlineHelpText>Deprecated</inlineHelpText>
@@ -181,7 +178,6 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Description</label>
         <length>128</length>
@@ -193,7 +189,6 @@
     </fields>
     <fields>
         <fullName>Email_Attach_Logs__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Email_Attach_Logs__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -206,7 +201,6 @@
     </fields>
     <fields>
         <fullName>Frequency__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Frequency__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -219,7 +213,6 @@
     </fields>
     <fields>
         <fullName>Import_Definition__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Import Definition</label>
         <referenceTo>Import_Definition__c</referenceTo>
@@ -233,8 +226,18 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Last_Error_Message__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Error Message</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Required_Import_Files__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Require_Import_Files__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -249,7 +252,6 @@
     </fields>
     <fields>
         <fullName>Schedule_Time__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>Import_Definition__r.Schedule_Time__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -262,7 +264,6 @@
     <fields>
         <fullName>Status_Change_via_Request_Import__c</fullName>
         <defaultValue>false</defaultValue>
-        <deprecated>false</deprecated>
         <description>Flag controller during Request Import to allow a status change monitored by validation rule.  To ensure status change goes through Request Import instead of direct field change.</description>
         <externalId>false</externalId>
         <inlineHelpText>Flag controller during Request Import to allow a status change monitored by validation rule.  To ensure status change goes through Request Import instead of direct field change.</inlineHelpText>
@@ -274,7 +275,6 @@
     <fields>
         <fullName>Status__c</fullName>
         <defaultValue>&quot;Pending&quot;</defaultValue>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
@@ -310,7 +310,6 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <formula>TEXT(Import_Definition__r.Type__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
