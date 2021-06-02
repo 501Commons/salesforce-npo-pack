@@ -43,15 +43,33 @@ global class Importer_Compare_File_Headers {
       for (Integer sourceIndex = index; sourceIndex > 0; sourceIndex--) {
 
          System.Debug(LoggingLevel.DEBUG, 'Source Title: ' + contentVersions[sourceIndex].Title + ' FileType: ' + contentVersions[sourceIndex].FileType);
-         String sourceVersionData = contentVersions[sourceIndex].VersionData.toString();
+         //String sourceVersionData = contentVersions[sourceIndex].VersionData.toString();
+         String sourceVersionDataEncoded = EncodingUtil.base64Encode(contentVersions[sourceIndex].VersionData);
 
          for (Integer targetIndex = sourceIndex - 1; targetIndex >= 0; targetIndex--) {
 
             System.Debug(LoggingLevel.DEBUG, 'Target Title: ' + contentVersions[targetIndex].Title + ' FileType: ' + contentVersions[targetIndex].FileType);
             if (contentVersions[sourceIndex].Title == contentVersions[targetIndex].Title && contentVersions[sourceIndex].FileType == contentVersions[targetIndex].FileType) {
 
-               String targetVersionData = contentVersions[targetIndex].VersionData.toString();
-               Integer compareLength = sourceVersionData.length() < targetVersionData.length() ? sourceVersionData.length() : targetVersionData.length();
+               String targetVersionDataEncoded = EncodingUtil.base64Encode(contentVersions[targetIndex].VersionData);
+               Integer compareLength = sourceVersionDataEncoded.length() < targetVersionDataEncoded.length() ? sourceVersionDataEncoded.length() : targetVersionDataEncoded.length();
+
+               String sourceVersionData, targetVersionData;
+               try {
+                  sourceVersionData = EncodingUtil.base64Decode(sourceVersionDataEncoded.left(compareLength)).toString();
+                  targetVersionData = EncodingUtil.base64Decode(targetVersionDataEncoded.left(compareLength)).toString();
+               }
+               catch (Exception ex){
+                  System.Debug(LoggingLevel.ERROR, 'Issue accessing import file: ' + contentVersions[sourceIndex].Title);
+
+                  importerInstance.Last_Error_Message__c = Date.today() + ' - ' + ' ERROR: accessing import file: ' + contentVersions[sourceIndex].Title + ' - potential system error.  If import file appears to have same column names then recommend bypass the column name validation by unchecking field: Check Columns Names on the definition and notifiy Salesforce Admin to allow scheduling.';
+
+                  if (!Test.isRunningTest()) {
+                     update importerInstance;
+                  }
+
+                  return new List<Boolean> { false };
+               }
 
                for (Integer compareIndex = 1; compareIndex <= compareLength; compareIndex++) {
 
@@ -62,10 +80,11 @@ global class Importer_Compare_File_Headers {
 
                         System.Debug(LoggingLevel.ERROR, 'Headers Not Equal');
                         System.Debug(LoggingLevel.DEBUG, 'Compare Index: ' + compareIndex);
-                        System.Debug(LoggingLevel.DEBUG, 'Source Version Data: ' + sourceVersionData.left(compareIndex));
-                        System.Debug(LoggingLevel.DEBUG, 'Target Version Data: ' + targetVersionData.left(compareIndex));
+                        System.Debug(LoggingLevel.DEBUG, 'Source Version Data: ' + sourceVersionData);
+                        System.Debug(LoggingLevel.DEBUG, 'Target Version Data: ' + targetVersionData);
 
-                        importerInstance.Last_Error_Message__c = Date.today() + ' - ' + ' ERROR: Headers Not Equal for ' + contentVersions[sourceIndex].Title + ' at character position ' + compareIndex;
+                        String subStringHelp = sourceVersionData.mid(compareIndex < 32 ? 1 : compareIndex - 32, compareIndex);
+                        importerInstance.Last_Error_Message__c = Date.today() + ' - ' + ' ERROR: Headers Not Equal for ' + contentVersions[sourceIndex].Title + ' at character position ' + compareIndex + ' previous 32 characters: ' + subStringHelp;
 
                         if (!Test.isRunningTest()) {
                            update importerInstance;
