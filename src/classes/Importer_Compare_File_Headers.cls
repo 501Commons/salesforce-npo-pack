@@ -54,6 +54,9 @@ global class Importer_Compare_File_Headers {
                String targetVersionDataEncoded = EncodingUtil.base64Encode(contentVersions[targetIndex].VersionData);
                Integer compareLength = sourceVersionDataEncoded.length() < targetVersionDataEncoded.length() ? sourceVersionDataEncoded.length() : targetVersionDataEncoded.length();
 
+               // Remove last 2 characters which are typically 0D 0A or \r \n - Carriage Return which can caused compare error
+               compareLength -= (compareLength > 2) ? 2 : 0;
+
                String sourceVersionData, targetVersionData;
                try {
                   sourceVersionData = EncodingUtil.base64Decode(sourceVersionDataEncoded.left(compareLength)).toString();
@@ -80,6 +83,8 @@ global class Importer_Compare_File_Headers {
 
                         System.Debug(LoggingLevel.ERROR, 'Headers Not Equal');
                         System.Debug(LoggingLevel.DEBUG, 'Compare Index: ' + compareIndex);
+                        System.Debug(LoggingLevel.DEBUG, 'Source Value: ' + sourceVersionData.mid(compareIndex - 1, compareIndex));
+                        System.Debug(LoggingLevel.DEBUG, 'Target Value: ' + targetVersionData.mid(compareIndex - 1, compareIndex));
                         System.Debug(LoggingLevel.DEBUG, 'Source Version Data: ' + sourceVersionData);
                         System.Debug(LoggingLevel.DEBUG, 'Target Version Data: ' + targetVersionData);
 
