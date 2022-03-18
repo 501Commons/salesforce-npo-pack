@@ -7,15 +7,15 @@ project:
         api_version: '50.0'
     dependencies:
         # npo02 (includes npe01)
-        - github: https://github.com/SalesforceFoundation/Households
+#        - github: https://github.com/SalesforceFoundation/Households
         # npe03
-        - github: https://github.com/SalesforceFoundation/Recurring_Donations
+#        - github: https://github.com/SalesforceFoundation/Recurring_Donations
         # npe4
-        - github: https://github.com/SalesforceFoundation/Relationships
+#        - github: https://github.com/SalesforceFoundation/Relationships
         # npe5
-        - github: https://github.com/SalesforceFoundation/Affiliations
+#        - github: https://github.com/SalesforceFoundation/Affiliations
         # pmm
-        - github: https://github.com/SalesforceFoundation/PMM
+#        - github: https://github.com/SalesforceFoundation/PMM
     git:
 
 tasks:

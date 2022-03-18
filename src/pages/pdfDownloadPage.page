@@ -1,0 +1,3 @@
+<apex:page controller="Utility_pdfDownloadController" sidebar="false" showHeader="false">
+    <embed type="application/pdf" src="data:application/pdf;base64,{!pdf}" style="width: 100%; height: 100vh; display: inline-block" />
+</apex:page>

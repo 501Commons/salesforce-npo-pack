@@ -12,6 +12,9 @@
         <members>PageControllerBase</members>
         <members>TestAutoConvertLeads</members>
         <members>TestLeadConvertPage</members>
+        <members>Utility_PdfDownloadController</members>
+        <members>Utility_RichText_To_String</members>
+        <members>Utility_TEST</members>
         <members>leadConvertController</members>
         <members>leadConvertCoreComponentController</members>
         <members>leadConvertTaskDescComponentController</members>
@@ -29,6 +32,7 @@
     <types>
         <members>campaignHistoryView</members>
         <members>leadConvertPage</members>
+        <members>pdfDownloadPage</members>
         <name>ApexPage</name>
     </types>
     <types>
